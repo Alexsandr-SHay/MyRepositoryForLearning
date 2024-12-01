@@ -8,4 +8,3 @@ variable = 30;
 console.log(variable);
 console.log("Я добавил");
 console.log("Я добавил123");
-console.log("commits");
