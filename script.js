@@ -7,3 +7,4 @@ var variable = 20;
 variable = 30;
 console.log(variable);
 console.log("Я добавил");
+console.log("Я добавил123");
