@@ -5,9 +5,9 @@ let rollback = Math.random() * 100;
 let fullPrice = 1000000;
 let adaptive = true;
 
-console.log(title);
-console.log(fullPrice);
-console.log(adaptive);
+console.log(typeof title);
+console.log(typeof fullPrice);
+console.log(typeof adaptive);
 console.log(screens.length);
 console.log(
   "Стоимость верстки экранов " +
@@ -17,7 +17,7 @@ console.log(
     fullPrice.toFixed(2) +
     " рублей."
 );
-console.log(screens.toLowerCase().split(" "));
+console.log(screens.toLowerCase().split(", "));
 console.log(
   "Процент отката посреднику за работу " +
     (fullPrice * (rollback / 100)).toFixed(2)
