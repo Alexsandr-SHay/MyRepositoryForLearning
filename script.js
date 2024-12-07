@@ -10,7 +10,7 @@ let service2 = prompt("Какой тип услуги нужен");
 let servicePrice2 = +prompt("Сколько это будет стоить?");
 let rollback = Math.random() * 100;
 let fullPrice = screenPrice + servicePrice1 + servicePrice2;
-let servicePercentPrice = Math.ceil(fullPrice - fullPrice * (rollback / 100));
+let allServicePrices, servicePercentPrice;
 
 const showTypeOF = function (variable) {
   console.log(variable, typeof variable);
@@ -32,17 +32,36 @@ const getRollBackMessage = function (price) {
   }
 };
 
+const getAllServicePrices = function (servicePrice1, servicePrice2) {
+  // возвращает сумму всех дополнительных услуг
+  return servicePrice1 + servicePrice2;
+};
+
+const getFullPrice = function (screenPrice, allServicePrices) {
+  // Функция возвращает сумму стоимости верстки и стоимости дополнительных услуг
+  return screenPrice + allServicePrices;
+};
+
+const getTitle = function (title) {
+  // 3 Корректировка названия проекта
+  title = title.trim().toLowerCase();
+  return title.charAt(0).toUpperCase() + title.slice(1);
+};
+
+const getServicePercentPrices = function (fullPrice, rollback) {
+  return fullPrice - Math.ceil(fullPrice - fullPrice * (rollback / 100));
+};
+
 showTypeOF(title);
 showTypeOF(screenPrice);
 showTypeOF(adaptive);
+allServicePrices = getAllServicePrices(servicePrice1, servicePrice2); // 1 задание
+fullPrice = getFullPrice(screenPrice, allServicePrices); //2 задание
+servicePercentPrice = getServicePercentPrices(fullPrice, rollback); // 3 задание
 
-console.log(getRollBackMessage(fullPrice));
-console.log(screens.length);
+console.log(screens);
+console.log("Скидка пользователя " + getRollBackMessage(fullPrice));
 console.log(
-  "Стоимость верстки экранов " +
-    screenPrice.toFixed(2) +
-    " рублей, " +
-    "Стоимость разработки сайта " +
-    fullPrice.toFixed(2) +
-    " рублей."
+  "Стоимость услуги без учёта отката " +
+    getServicePercentPrices(fullPrice, rollback)
 );
