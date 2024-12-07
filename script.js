@@ -11,9 +11,18 @@ let allServicePrices, servicePercentPrice;
 let service1;
 let service2;
 
+// Метод с практики!!
+// const isNumber = function (num) {
+//   //Проверка на пустоту, на число
+//   return !isNaN(parseFloat(num)) && isFinite(num);
+// };
+
+// Усложнённое ДЗ №5
 const isNumber = function (num) {
   //Проверка на пустоту, на число
-  return !isNaN(parseFloat(num)) && isFinite(num);
+  if (!isNaN(parseFloat(num)) && isFinite(num)) {
+    return num[0] !== " " && num.at(-1) !== " ";
+  }
 };
 
 const asking = function () {
@@ -53,6 +62,7 @@ const showTypeOF = function (variable) {
 
 const getFullPrice = function () {
   // Функция возвращает сумму стоимости верстки и стоимости дополнительных услуг
+
   return Number(screenPrice) + allServicePrices;
 };
 
