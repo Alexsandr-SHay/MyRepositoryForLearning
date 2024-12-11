@@ -108,6 +108,13 @@ const appData = {
   },
 
   logger: function () {
+    for (let key in appData) {
+      console.log("Ключ: " + key + " Значение: " + appData[key]);
+    }
+  },
+
+  start: function () {
+    appData.asking();
     appData.allServicePrices = appData.getAllServicePrices();
     appData.fullPrice = appData.getFullPrice(
       appData.screenPrice,
@@ -118,18 +125,8 @@ const appData = {
       appData.rollback
     );
     appData.title = appData.getTitle();
-    for (let key in appData) {
-      console.log("Ключ: " + key + " Значение: " + appData[key]);
-    }
-  },
-
-  start: function () {
-    appData.asking();
     appData.logger();
   },
 };
 
 appData.start();
-
-console.log(appData.fullPrice);
-console.log(appData.servicePercentPrice);
