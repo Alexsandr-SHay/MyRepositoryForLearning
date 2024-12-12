@@ -11,35 +11,6 @@ const appData = {
   servicePercentPrice: 0,
   services: {},
 
-  // asking: function () {
-  //   appData.title = prompt("Как называется наш проект", "Калькулятор верстки");
-
-  //   for (let i = 0; i < 2; i++) {
-  //     let name = prompt("Какие типы экранов нужно разработать");
-  //     let price = 0;
-
-  //     do {
-  //       price = prompt("Сколько будет стоить данная работа");
-  //     } while (!appData.isNumber(price));
-
-  //     appData.screens.push({ id: i, name: name, price: price });
-  //   }
-
-  //   for (let i = 0; i < 2; i++) {
-  //     let name = prompt("Какой тип услуги нужен");
-  //     let price = 0;
-
-  //     do {
-  //       price = prompt("Сколько будет стоить данная работа");
-  //     } while (!appData.isNumber(price));
-
-  //     appData.services[name] = +price;
-  //     //appData.services[indexServise] = i;
-  //   }
-
-  //   appData.adaptive = confirm("Нужен ли адаптив на сайте");
-  // },
-
   asking: function () {
     appData.title = appData.checkString(
       "Как называется наш проект",
@@ -59,6 +30,7 @@ const appData = {
 
     for (let i = 0; i < 2; i++) {
       let name = appData.checkString("Какой тип услуги нужен");
+      name += " " + i; //Усложнённое задание №8 (Лобовое решение задачи, лучше варианта не придумал)
       let price = 0;
 
       do {
@@ -66,7 +38,6 @@ const appData = {
       } while (!appData.isNumber(price));
 
       appData.services[name] = +price;
-      //appData.services[indexServise] = i;
     }
 
     appData.adaptive = confirm("Нужен ли адаптив на сайте");
@@ -83,9 +54,13 @@ const appData = {
   },
 
   addPrices: function () {
-    for (let screen of appData.screens) {
-      appData.screenPrice += +screen.price;
-    }
+    // for (let screen of appData.screens) {
+    //   appData.screenPrice += +screen.price;
+    // }
+    appData.screenPrice = appData.screens.reduce(function (sum, value) {
+      //Применение метода reduce
+      return sum + +value.price;
+    }, 0);
 
     for (let key in appData.services) {
       appData.allServicePrices += appData.services[key];
