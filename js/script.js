@@ -8,14 +8,11 @@ const elementHTML = {
   elementsClassNumber: document.querySelectorAll(".other-items.number"),
   rollback: document.querySelector(".rollback input"),
   rollback1: document.querySelector(".rollback span"), //Тут всёго один span
-  totalInput: document.getElementsByClassName("total-input"),
-  input: [],
-
-  getInput: function () {
-    for (let i = 0; i < elementHTML.totalInput.length; i++) {
-      elementHTML.input.push(elementHTML.totalInput[i]);
-    }
-  },
+  total: document.getElementsByClassName("total-input")[0],
+  totalCount: document.getElementsByClassName("total-input")[1],
+  totalCountOther: document.getElementsByClassName("total-input")[2],
+  fullTotalCount: document.getElementsByClassName("total-input")[3],
+  totalCountRollBack: document.getElementsByClassName("total-input")[4],
   screen: document.querySelectorAll(".screen"),
 
   print: function () {
@@ -27,8 +24,11 @@ const elementHTML = {
     console.log(elementHTML.elementsClassNumber);
     console.log(elementHTML.rollback);
     console.log(elementHTML.rollback1);
-    console.log(elementHTML.totalInput);
-    console.log(elementHTML.input);
+    console.log(elementHTML.total);
+    console.log(elementHTML.totalCount);
+    console.log(elementHTML.totalCountOther);
+    console.log(elementHTML.fullTotalCount);
+    console.log(elementHTML.totalCountRollBack);
     console.log(elementHTML.screen);
   },
 };
@@ -164,5 +164,4 @@ const appData = {
 
 //appData.start(); Отключил основную программу, пока не перейдём по урокам к её обработке.
 
-elementHTML.getInput();
 elementHTML.print();
