@@ -22,16 +22,17 @@ const appData = {
   screenPrice: 0,
   numberOfScreens: 0,
   adaptive: true,
-  rollback: 10,
+  rollback: 0,
   fullPrice: 0,
   servicePricesPercent: 0,
   servicePricesNumber: 0,
   servicePercentPrice: 0,
   servicesPercent: {},
   servicesNumber: {},
+  isError: false,
   init: function () {
     appData.addTitle();
-    startBtn.addEventListener("click", appData.start);
+    startBtn.addEventListener("click", appData.checkError);
     buttonPlus.addEventListener("click", appData.addScreenBlock);
     inputRange.addEventListener("input", appData.changingSliderRollback);
   },
@@ -41,12 +42,11 @@ const appData = {
   },
 
   start: function () {
-    if (appData.addScreens()) {
-      button.disabled = true;
-    }
+    appData.addScreens();
     appData.addServices();
     appData.addPrices();
     console.log(appData);
+    console.log(inputRange.value);
     appData.showResult();
     appData.reset();
   },
@@ -80,14 +80,23 @@ const appData = {
         price: +select.value * +input.value,
         count: +input.value,
       });
-      if (select.value == 0 || input.value == 0) {
-        val = true;
-        appData.screens.splice(0, screens.length);
-      }
     });
 
     console.log(appData.screens);
     return val;
+  },
+
+  checkError: function () {
+    screens = document.querySelectorAll(".screen");
+    appData.isError = false;
+    screens.forEach(function (screen) {
+      const select = screen.querySelector("select");
+      const input = screen.querySelector("input");
+      if (select.value === "" || input.value === "") appData.isError = true;
+    });
+    if (!appData.isError) {
+      appData.start();
+    }
   },
 
   addServices: function () {
@@ -160,7 +169,7 @@ const appData = {
     appData.screenPrice = 0;
     appData.numberOfScreens = 0;
     appData.adaptive = true;
-    appData.rollback = 10;
+    appData.rollback = 0;
     appData.fullPrice = 0;
     appData.servicePricesPercent = 0;
     appData.servicePricesNumber = 0;
