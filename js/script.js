@@ -30,6 +30,7 @@ const appData = {
   servicesPercent: {},
   servicesNumber: {},
   isError: false,
+  saveFullPrice: 0,
   init: function () {
     appData.addTitle();
     startBtn.addEventListener("click", appData.checkError);
@@ -48,6 +49,7 @@ const appData = {
     console.log(appData);
     console.log(inputRange.value);
     appData.showResult();
+
     appData.reset();
   },
 
@@ -67,7 +69,6 @@ const appData = {
 
   addScreens: function () {
     screens = document.querySelectorAll(".screen");
-    let val = false;
 
     screens.forEach(function (screen, index) {
       const select = screen.querySelector("select");
@@ -83,7 +84,6 @@ const appData = {
     });
 
     console.log(appData.screens);
-    return val;
   },
 
   checkError: function () {
@@ -137,6 +137,7 @@ const appData = {
   },
 
   addPrices: function () {
+    appData.saveFullPrice = 0; //обнуление
     appData.screenPrice = appData.screens.reduce(function (sum, value) {
       return sum + +value.price;
     }, 0);
@@ -161,6 +162,23 @@ const appData = {
     for (let key of appData.screens) {
       appData.numberOfScreens += +key.count;
     }
+
+    appData.saveFullPrice = appData.fullPrice; // сохранение значения
+  },
+
+  rollbackNow: function (event) {
+    appData.rollback = event.target.value;
+    inputRangeValue.innerText = appData.rollback + "%";
+    appData.servicePercentPrice =
+      appData.saveFullPrice - appData.saveFullPrice * (appData.rollback / 100);
+    totalCountRollBack.value = appData.servicePercentPrice;
+
+    /*функция очень сильно перегружена по результату:
+    1. Она принимает значение 
+    2. Производит расчёт
+    3. Выводит результат 
+    Не знаю насколько это правильно с точки зрения code style, но с учётом того что она используется только в одном месте разбивать её на подфункции не вижу смысла 
+    */
   },
 
   reset: function () {
@@ -180,3 +198,4 @@ const appData = {
 };
 
 appData.init();
+inputRange.addEventListener("input", appData.rollbackNow);
