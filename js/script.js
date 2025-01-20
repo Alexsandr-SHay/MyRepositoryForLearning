@@ -35,17 +35,17 @@ const appData = {
   saveFullPrice: 0,
   init: function () {
     appData.addTitle();
-    startBtn.addEventListener("click", appData.checkError);
-    resetBtn.addEventListener("click", appData.reset);
-    buttonPlus.addEventListener("click", appData.addScreenBlock);
-    inputRange.addEventListener("input", appData.changingSliderRollback);
+    startBtn.addEventListener("click", this.checkError);
+    resetBtn.addEventListener("click", this.reset);
+    buttonPlus.addEventListener("click", this.addScreenBlock);
+    inputRange.addEventListener("input", this.changingSliderRollback);
   },
 
   addTitle() {
     document.title = title.textContent;
   },
 
-  start: function () {
+  start: () => {
     appData.addScreens();
     appData.addServices();
     appData.addPrices();
@@ -55,17 +55,16 @@ const appData = {
     }
   },
 
-  changingSliderRollback: function (event) {
+  changingSliderRollback: (event) => {
     if (!appData.isError) {
-      appData.rollback = event.target.value;
-      inputRangeValue.innerText = appData.rollback + "%";
+      rollback = event.target.value;
+      inputRangeValue.innerText = this.rollback + "%";
       totalCountRollBack.value =
-        appData.saveFullPrice -
-        appData.saveFullPrice * (appData.rollback / 100);
+        this.saveFullPrice - this.saveFullPrice * (this.rollback / 100);
     }
   },
 
-  showResult: function () {
+  showResult: () => {
     total.value = appData.screenPrice;
     totalCountOther.value =
       appData.servicePricesPercent + appData.servicePricesNumber;
@@ -74,7 +73,7 @@ const appData = {
     totalCount.value = appData.numberOfScreens;
   },
 
-  addScreens: function () {
+  addScreens: () => {
     screens = document.querySelectorAll(".screen");
 
     screens.forEach((screen, index) => {
@@ -90,10 +89,10 @@ const appData = {
       });
     });
 
-    console.log(appData.screens);
+    console.log(this.screens);
   },
 
-  checkError: function () {
+  checkError: () => {
     screens = document.querySelectorAll(".screen");
     appData.isError = false;
     screens.forEach((screen) => {
@@ -106,8 +105,8 @@ const appData = {
     }
   },
 
-  addServices: function () {
-    otherItemsPercent.forEach(function (item) {
+  addServices: () => {
+    otherItemsPercent.forEach((item) => {
       const check = item.querySelector("input[type=checkbox]");
       const label = item.querySelector("label");
       const input = item.querySelector("input[type=text]");
@@ -117,7 +116,7 @@ const appData = {
       }
     });
 
-    otherItemsNumber.forEach(function (item) {
+    otherItemsNumber.forEach((item) => {
       const check = item.querySelector("input[type=checkbox]");
       const label = item.querySelector("label");
       const input = item.querySelector("input[type=text]");
@@ -128,22 +127,12 @@ const appData = {
     });
   },
 
-  addScreenBlock: function () {
+  addScreenBlock: () => {
     const cloneScreen = screens[0].cloneNode(true);
     screens[screens.length - 1].after(cloneScreen);
   },
 
-  checkString: function (question) {
-    let str;
-    do {
-      str = prompt(question);
-    } while (!Number.isNaN(Number(str)));
-    {
-      return str;
-    }
-  },
-
-  addPrices: function () {
+  addPrices: () => {
     appData.saveFullPrice = 0; //обнуление
     appData.screenPrice = appData.screens.reduce((sum, value) => {
       return sum + +value.price;
@@ -173,13 +162,13 @@ const appData = {
     appData.saveFullPrice = appData.fullPrice; // сохранение значения
   },
 
-  resetBtn: function () {
+  resetBtn: () => {
     startBtn.style.display = "none";
     resetBtn.style.display = "block";
     buttonPlus.setAttribute("disabled", true);
   },
 
-  reset: function () {
+  reset: () => {
     appData.resetScreens();
     appData.screens = [];
     appData.screenPrice = 0;
@@ -198,15 +187,14 @@ const appData = {
     resetBtn.style.display = "none";
     appData.isError = false;
 
-    checkbox.forEach(function (checkbox) {
+    checkbox.forEach((checkbox) => {
       checkbox.checked = false;
     });
-
     buttonPlus.removeAttribute("disabled");
     appData.showResult();
   },
 
-  resetScreens: function () {
+  resetScreens: () => {
     appData.screens.forEach((screen, index) => {
       const elem = document.querySelector(".screen");
       const input = elem.querySelector("input");
